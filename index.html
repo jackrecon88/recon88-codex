@@ -1,0 +1,1647 @@
+```html
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kali & NetHunter Cyber-Terminal Codex A-Z | Recon88 Edition</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#070a13',
+              darker: '#0c1220',
+              panel: '#101a2e',
+              border: '#1f2f4d',
+              cyan: '#00f0ff',
+              emerald: '#00ff9d',
+              pink: '#ff0055',
+              purple: '#8b5cf6',
+              yellow: '#ffe600'
+            }
+          },
+          fontFamily: {
+            mono: ['"Fira Code"', 'monospace'],
+            cyber: ['"Orbitron"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #070a13;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(16, 26, 46, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 26, 46, 0.4) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0c1220;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2f4d;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f0ff;
+    }
+
+    .neon-border-cyan {
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), inset 0 0 15px rgba(0, 240, 255, 0.05);
+    }
+    .tech-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .tech-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 240, 255, 0.5);
+      box-shadow: 0 8px 25px rgba(0, 240, 255, 0.15);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col selection:bg-cyber-cyan selection:text-black">
+
+  <header class="sticky top-0 z-40 bg-cyber-black/90 backdrop-blur-md border-b border-cyber-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-cyber-panel border border-cyber-cyan/50 flex items-center justify-center text-cyber-cyan shadow-[0_0_12px_rgba(0,240,255,0.4)]">
+          <i class="fa-solid fa-terminal text-lg"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-cyber tracking-wider font-black text-lg sm:text-xl text-white">RECON88<span class="text-cyber-cyan">_CODEX</span></h1>
+            <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-cyber-pink/20 text-cyber-pink border border-cyber-pink/40 font-bold tracking-widest">BY RECON88</span>
+          </div>
+          <p class="text-xs text-slate-400 font-mono">Linux & NetHunter Cyber-Security Dictionary • Built by Recon88</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs font-mono">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyber-panel border border-cyber-cyan/40 text-cyber-cyan shadow-[0_0_10px_rgba(0,240,255,0.15)]">
+          <i class="fa-solid fa-user-secret text-cyber-emerald"></i>
+          <span>OPERADOR: <strong class="text-white font-bold tracking-wide">RECON88</strong></span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyber-panel border border-cyber-border text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-cyber-emerald animate-pulse"></span>
+          <span>SISTEMA: <strong class="text-cyber-emerald">EN LÍNEA</strong></span>
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyber-panel border border-cyber-border text-slate-300">
+          <i class="fa-solid fa-database text-cyber-cyan"></i>
+          <span>COMANDOS: <strong id="totalCommandsCount" class="text-cyber-cyan">--</strong></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col gap-6">
+
+    <section class="p-6 rounded-2xl bg-cyber-panel/80 border border-cyber-border relative overflow-hidden shadow-2xl">
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-cyber-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-cyber-purple/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="relative z-10 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyber-cyan/10 border border-cyber-cyan/30 text-cyber-cyan text-xs font-mono">
+          <i class="fa-solid fa-shield-halved text-cyber-emerald"></i>
+          <span>PROYECTO OFICIAL DE <strong class="text-white font-bold">RECON88</strong> // CYBER INTELLIGENCE</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-cyber font-bold text-white flex items-center gap-3">
+              <i class="fa-solid fa-terminal text-cyber-cyan"></i>
+              Arsenal Táctico de Comandos (A - Z)
+            </h2>
+            <p class="text-sm text-slate-400 mt-1 max-w-3xl">
+              Plataforma desarrollada por <span class="text-cyber-cyan font-semibold">Recon88</span> para el aprendizaje exhaustivo de <span class="text-cyber-cyan font-semibold">Kali Linux</span> y módulos móviles para <span class="text-cyber-emerald font-semibold">Kali NetHunter</span>. Toca cualquier comando para desplegar su guía de uso en español.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="randomCmdBtn" class="px-3.5 py-2 text-xs font-mono font-semibold rounded-lg bg-cyber-cyan/10 hover:bg-cyber-cyan/25 text-cyber-cyan border border-cyber-cyan/30 flex items-center gap-2 transition">
+              <i class="fa-solid fa-dice"></i> Comando Aleatorio
+            </button>
+          </div>
+        </div>
+
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-cyber-cyan text-base">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <input 
+            type="text" 
+            id="searchInput"
+            placeholder="Buscar por comando (ej. nmap, nh, aircrack, badusb...), etiqueta o funcionalidad..." 
+            class="w-full pl-11 pr-24 py-3.5 bg-cyber-black/90 border border-cyber-border rounded-xl text-white placeholder-slate-500 font-mono text-sm focus:outline-none focus:border-cyber-cyan focus:ring-1 focus:ring-cyber-cyan transition shadow-inner"
+          >
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+            <button id="clearSearchBtn" class="hidden text-xs font-mono text-slate-400 hover:text-white px-2 py-1 rounded bg-slate-800/80">Limpiar</button>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-mono no-scrollbar" id="categoryFilters">
+          <button data-cat="all" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-cyan bg-cyber-cyan text-black font-semibold shrink-0 transition">
+            Todos (A-Z)
+          </button>
+          <button data-cat="nethunter" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-emerald hover:text-cyber-emerald shrink-0 transition">
+            <i class="fa-brands fa-android mr-1"></i> NetHunter Móvil / Hardware
+          </button>
+          <button data-cat="wifi" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan shrink-0 transition">
+            <i class="fa-solid fa-wifi mr-1"></i> WiFi & Radio SDR
+          </button>
+          <button data-cat="recon" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-yellow hover:text-cyber-yellow shrink-0 transition">
+            <i class="fa-solid fa-radar mr-1"></i> Reconocimiento & Red
+          </button>
+          <button data-cat="web" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-purple hover:text-cyber-purple shrink-0 transition">
+            <i class="fa-solid fa-globe mr-1"></i> Web Audit & Exploits
+          </button>
+          <button data-cat="pass" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-pink hover:text-cyber-pink shrink-0 transition">
+            <i class="fa-solid fa-key mr-1"></i> Password & Forense
+          </button>
+          <button data-cat="core" class="cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-slate-300 hover:text-white shrink-0 transition">
+            <i class="fa-solid fa-cube mr-1"></i> Linux Base
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-cyber-panel/50 border border-cyber-border rounded-xl p-3 shadow-md">
+      <div class="flex items-center justify-between mb-2 px-1">
+        <span class="text-xs font-mono font-bold text-cyber-cyan tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-arrow-down-a-z"></i> ÍNDICE ALFABÉTICO COMPLETO
+        </span>
+        <span class="text-[11px] font-mono text-slate-400">Selecciona una letra para filtrar</span>
+      </div>
+      <div class="grid grid-cols-7 sm:grid-cols-13 md:grid-cols-26 gap-1.5" id="alphabetButtonsContainer">
+      </div>
+    </section>
+
+    <div class="flex items-center justify-between text-xs font-mono text-slate-400 px-1">
+      <div id="filterStatus">Mostrando todos los comandos de la <span class="text-cyber-cyan font-bold">A</span> a la <span class="text-cyber-cyan font-bold">Z</span></div>
+      <button id="resetAllFilters" class="text-cyber-pink hover:underline hidden">Restablecer filtros</button>
+    </div>
+
+    <div id="commandsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    </div>
+
+    <div id="noResultsState" class="hidden py-16 text-center space-y-3">
+      <div class="w-16 h-16 rounded-full bg-cyber-panel border border-cyber-pink/40 text-cyber-pink flex items-center justify-center mx-auto text-2xl">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 class="font-cyber font-bold text-lg text-white">No se detectaron comandos</h3>
+      <p class="text-xs text-slate-400 font-mono">No hay herramientas que coincidan con la búsqueda o filtro seleccionado.</p>
+      <button onclick="resetFilters()" class="px-4 py-2 text-xs font-mono rounded-lg bg-cyber-panel border border-cyber-cyan text-cyber-cyan hover:bg-cyber-cyan/20">
+        Ver todos los comandos
+      </button>
+    </div>
+  </main>
+
+  <div id="commandModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-cyber-darker border-2 border-cyber-cyan/60 w-full max-w-2xl rounded-2xl shadow-[0_0_40px_rgba(0,240,255,0.25)] flex flex-col max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 opacity-0" id="modalBox">
+      
+      <div class="px-5 py-4 bg-cyber-panel border-b border-cyber-border flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-cyber-pink inline-block animate-ping"></span>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="modalLetterTag" class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-cyber-cyan text-black">A</span>
+              <h3 id="modalCmdName" class="text-xl font-mono font-bold text-white tracking-wide">nmap</h3>
+              <span id="modalEnvTag" class="text-[10px] font-mono px-2 py-0.5 rounded border border-cyber-emerald/40 bg-cyber-emerald/10 text-cyber-emerald">Kali Linux</span>
+            </div>
+            <p id="modalCmdRoleEs" class="text-xs text-slate-400 mt-0.5 font-sans">Escáner de red y auditoría de seguridad</p>
+          </div>
+        </div>
+        <button id="closeModalBtn" class="text-slate-400 hover:text-white p-2 rounded-lg hover:bg-white/10 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-5 text-sm font-sans">
+        <div class="space-y-2">
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyber-cyan flex items-center gap-2">
+            <i class="fa-solid fa-circle-info"></i> ¿Para qué sirve este comando?
+          </h4>
+          <p id="modalExplanation" class="text-slate-300 leading-relaxed bg-cyber-panel/60 p-4 rounded-xl border border-cyber-border text-sm">
+            Explicación detallada...
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyber-emerald flex items-center gap-2">
+              <i class="fa-solid fa-code"></i> Sintaxis y Ejemplo Práctico
+            </h4>
+            <span class="text-[10px] font-mono text-slate-400">Haz clic para copiar</span>
+          </div>
+          <div class="relative group">
+            <div class="bg-black/90 rounded-xl p-3.5 border border-cyber-border font-mono text-xs sm:text-sm text-cyber-cyan flex items-center justify-between overflow-x-auto">
+              <code id="modalSyntax" class="mr-3 select-all">nmap -sS -sV -p- 192.168.1.1</code>
+              <button id="copySyntaxBtn" class="px-2.5 py-1 rounded bg-cyber-panel hover:bg-cyber-cyan hover:text-black text-slate-300 text-xs border border-cyber-border transition flex items-center gap-1 shrink-0">
+                <i class="fa-regular fa-copy"></i> <span>Copiar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyber-yellow flex items-center gap-2">
+            <i class="fa-solid fa-sliders"></i> Parámetros y Opciones Clave
+          </h4>
+          <div id="modalFlagsList" class="space-y-2 bg-cyber-panel/30 p-3 rounded-xl border border-cyber-border">
+          </div>
+        </div>
+
+        <div id="modalScenarioBox" class="p-3.5 rounded-xl bg-cyber-purple/10 border border-cyber-purple/30 text-xs text-slate-300 space-y-1">
+          <div class="font-mono font-bold text-cyber-purple flex items-center gap-2">
+            <i class="fa-solid fa-crosshairs"></i> ESCENARIO DE AUDITORÍA / PENTESTING
+          </div>
+          <p id="modalScenarioText" class="leading-relaxed text-slate-300">
+            Detalles del escenario...
+          </p>
+        </div>
+      </div>
+
+      <div class="px-5 py-3 bg-cyber-panel border-t border-cyber-border flex items-center justify-between text-xs font-mono">
+        <span class="text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-terminal text-cyber-cyan"></i> Base de datos de <strong class="text-cyber-cyan">Recon88</strong>
+        </span>
+        <button id="closeModalBottomBtn" class="px-4 py-1.5 rounded-lg bg-cyber-cyan text-black font-semibold hover:bg-cyber-emerald transition">
+          Entendido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-cyber-darker border border-cyber-cyan text-white px-4 py-2.5 rounded-xl shadow-2xl font-mono text-xs flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-cyber-emerald text-sm"></i>
+    <span id="toastMessage">Texto copiado al portapapeles</span>
+  </div>
+
+  <footer class="border-t border-cyber-border bg-cyber-black py-5 mt-8">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left font-mono text-xs text-slate-400">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyber-cyan animate-pulse"></span>
+        <span>Kali & NetHunter Cyber Codex • Creado y mantenido por <strong class="text-cyber-cyan font-bold tracking-wider">Recon88</strong></span>
+      </div>
+      <div class="flex items-center gap-3 text-slate-500">
+        <span class="px-2 py-0.5 rounded bg-cyber-panel border border-cyber-border text-slate-300">root@recon88:~#</span>
+        <span>© Todos los derechos reservados</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const COMMANDS_DATABASE = [
+      {
+        letter: 'A',
+        cmd: 'airmon-ng',
+        nameEn: 'Airmon-NG (Monitor Mode)',
+        nameEs: 'Habilitar modo monitor en tarjeta WiFi',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Permite habilitar o deshabilitar el modo monitor en interfaces inalámbricas (tarjetas WiFi internas o adaptadores USB OTG en NetHunter), deteniendo procesos en conflicto para permitir la captura cruda de paquetes 802.11.',
+        syntax: 'sudo airmon-ng start wlan0',
+        flags: [
+          { flag: 'start <interfaz>', desc: 'Activa el modo monitor creando la interfaz virtual (ej. wlan0mon).' },
+          { flag: 'check kill', desc: 'Finaliza los gestores de red (wpa_supplicant, NetworkManager) que interfieren en la captura.' },
+          { flag: 'stop <interfaz>', desc: 'Regresa la interfaz WiFi a modo de cliente estándar (estación).' }
+        ],
+        scenario: 'Paso 1 fundamental en cualquier auditoría inalámbrica con Kali o Kali NetHunter (usando antena externa USB tipo Alfa o Atheros).'
+      },
+      {
+        letter: 'A',
+        cmd: 'airodump-ng',
+        nameEn: 'Airodump-NG (Packet Capture)',
+        nameEs: 'Capturador de redes WiFi y clientes',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Inspecciona en tiempo real el espectro electromagnético WiFi, mostrando puntos de acceso (BSSID, ESSID, canal, cifrado) y dispositivos clientes asociados para guardar paquetes de autenticación (.cap).',
+        syntax: 'airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w captura wlan0mon',
+        flags: [
+          { flag: '-c <canal>', desc: 'Fija el canal de radio (1 al 13 en 2.4GHz o 36+ en 5GHz) evitando saltos continuos.' },
+          { flag: '--bssid <MAC>', desc: 'Filtra la captura únicamente hacia el router objetivo.' },
+          { flag: '-w <prefijo>', desc: 'Guarda los paquetes capturados en archivos de captura (.cap, .csv, .kismet).' }
+        ],
+        scenario: 'Identificación de redes y captura obligatoria del handshake WPA/WPA2 para descifrado de credenciales.'
+      },
+      {
+        letter: 'A',
+        cmd: 'aircrack-ng',
+        nameEn: 'Aircrack-NG (Key Cracker)',
+        nameEs: 'Auditor y recuperador de claves WiFi',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Herramienta de análisis criptográfico para descifrar claves WEP mediante ataques FMS/KoreK y contraseñas WPA/WPA2-PSK mediante fuerza bruta de diccionario contra el handshake capturado.',
+        syntax: 'aircrack-ng -w /usr/share/wordlists/rockyou.txt captura-01.cap',
+        flags: [
+          { flag: '-w <wordlist>', desc: 'Ruta del diccionario de contraseñas a probar.' },
+          { flag: '-b <bssid>', desc: 'Selecciona la dirección MAC específica del router que se quiere auditar.' }
+        ],
+        scenario: 'Comprobación de la robustez de las contraseñas WiFi de routers corporativos o domésticos.'
+      },
+      {
+        letter: 'A',
+        cmd: 'assetfinder',
+        nameEn: 'Assetfinder (Subdomain Recon)',
+        nameEs: 'Buscador pasivo de subdominios y activos',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'Herramienta ultrarrápida escrita en Go que consulta fuentes públicas (como crt.sh, certspotter, wayback) para localizar todos los subdominios válidos asociados a un objetivo sin interactuar directamente con su infraestructura.',
+        syntax: 'assetfinder --subs-only objetivo.com > subdominios.txt',
+        flags: [
+          { flag: '--subs-only', desc: 'Muestra únicamente los subdominios que pertenezcan estrictamente al dominio objetivo.' }
+        ],
+        scenario: 'Fase de reconocimiento OSINT en auditorías web y bug bounty para ampliar la superficie de ataque.'
+      },
+      {
+        letter: 'B',
+        cmd: 'badusb',
+        nameEn: 'NetHunter BadUSB (RNDIS / Ethernet)',
+        nameEs: 'Módulo NetHunter de interfaz de red maliciosa',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Módulo del kernel de Kali NetHunter que transforma el smartphone conectado por cable USB en una tarjeta de red Ethernet virtual (RNDIS/ECM). Al ser conectado a la víctima, el teléfono se apodera de la puerta de enlace predeterminada y redirige todo el tráfico hacia NetHunter.',
+        syntax: 'nh -r "badusb start"',
+        flags: [
+          { flag: 'start / stop', desc: 'Activa o desactiva la emulación USB Gadget en el kernel Android.' },
+          { flag: 'responder', desc: 'Se combina frecuentemente con Responder para capturar hashes NTLMv2 automáticamente.' }
+        ],
+        scenario: 'Ataques físicos rápidos en ordenadores bloqueados donde se interceptan peticiones de red al conectar el móvil.'
+      },
+      {
+        letter: 'B',
+        cmd: 'bootkali',
+        nameEn: 'BootKali (Init Chroot Script)',
+        nameEs: 'Iniciador del contenedor chroot NetHunter',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Script fundamental en entornos Android con Kali NetHunter. Monta los sistemas de archivos necesarios (/dev, /proc, /sys, /sdcard) y arranca el entorno chroot con privilegios de root para tener todas las herramientas listas.',
+        syntax: 'su -c bootkali',
+        flags: [
+          { flag: 'Sin argumentos', desc: 'Lanza la terminal bash de Kali interactiva dentro de Termux o el emulador de terminal Android.' }
+        ],
+        scenario: 'Arranque rápido de Kali desde la consola de Android si no se usa la aplicación gráfica NetHunter.'
+      },
+      {
+        letter: 'B',
+        cmd: 'burpsuite',
+        nameEn: 'Burp Suite (Web Proxy)',
+        nameEs: 'Proxy de intercepción y auditoría web',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'El estándar de la industria para pruebas de penetración en aplicaciones web y APIs. Actúa como proxy intermedio (MitM) permitiendo interceptar, modificar, repetir y automatizar peticiones HTTP/HTTPS hacia el servidor.',
+        syntax: 'burpsuite &',
+        flags: [
+          { flag: 'Proxy Tab', desc: 'Intercepta y modifica tráfico antes de que llegue al servidor o al navegador.' },
+          { flag: 'Repeater', desc: 'Reenvía peticiones personalizadas manualmente para estudiar la respuesta del backend.' },
+          { flag: 'Intruder', desc: 'Automatiza pruebas de inyección, fuerza bruta y fuzzing de parámetros.' }
+        ],
+        scenario: 'Identificación de fallos como SQLi, XSS, CSRF, IDOR y lógica de negocio en plataformas web.'
+      },
+      {
+        letter: 'B',
+        cmd: 'binwalk',
+        nameEn: 'Binwalk (Firmware Extraction)',
+        nameEs: 'Analizador y extractor de firmwares y binarios',
+        category: 'pass',
+        env: 'Kali Linux',
+        desc: 'Herramienta de análisis forense para ingeniería inversa de imágenes de firmware de dispositivos IoT, routers y cámaras. Escanea firmas mágicas, detecta compresión y extrae sistemas de archivos embebidos (SquashFS, CramFS).',
+        syntax: 'binwalk -eM firmware.bin',
+        flags: [
+          { flag: '-e', desc: 'Extrae automáticamente los archivos identificados.' },
+          { flag: '-M', desc: 'Extracción recursiva (desempaqueta archivos dentro de archivos extraídos).' },
+          { flag: '-B', desc: 'Escanea en busca de firmas de tipos de archivo conocidos.' }
+        ],
+        scenario: 'Extracción de credenciales hardcodeadas, certificados y claves privadas del firmware de dispositivos IoT.'
+      },
+      {
+        letter: 'C',
+        cmd: 'crunch',
+        nameEn: 'Crunch (Wordlist Generator)',
+        nameEs: 'Generador de diccionarios de contraseñas',
+        category: 'pass',
+        env: 'Ambos',
+        desc: 'Genera listas de palabras basadas en patrones específicos, caracteres permitidos (números, letras, símbolos) y longitudes mínimas/máximas. Permite generar diccionarios directos al disco o enviarlos por tubería a otras herramientas sin ocupar espacio.',
+        syntax: 'crunch 8 8 0123456789 -o numeros.txt',
+        flags: [
+          { flag: '<min> <max>', desc: 'Define la longitud mínima y máxima de las palabras a generar.' },
+          { flag: '-t <patrón>', desc: 'Establece un patrón (@ letras minúsculas, , mayúsculas, % números, ^ símbolos).' },
+          { flag: '-o <archivo>', desc: 'Guarda el resultado en un archivo.' }
+        ],
+        scenario: 'Creación de diccionarios dirigidos cuando se conocen detalles del formato de clave del objetivo.'
+      },
+      {
+        letter: 'C',
+        cmd: 'commix',
+        nameEn: 'Commix (Command Injection Exploiter)',
+        nameEs: 'Explotador automatizado de inyecciones de comandos',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta especializada en auditar aplicaciones web para encontrar y explotar vulnerabilidades de inyección de comandos del sistema operativo (Command Injection), proporcionando una shell interactiva sobre el servidor.',
+        syntax: 'commix --url="http://objetivo.com/ping.php?host=INJECT_HERE"',
+        flags: [
+          { flag: '--url', desc: 'URL del objetivo con el punto vulnerable marcado o para fuzzear.' },
+          { flag: '--os-cmd="whoami"', desc: 'Ejecuta un comando específico si la vulnerabilidad es confirmada.' }
+        ],
+        scenario: 'Auditoría de paneles de control web o routers que ejecutan utilidades de consola por detrás.'
+      },
+      {
+        letter: 'C',
+        cmd: 'crackmapexec',
+        nameEn: 'CrackMapExec (Active Directory Pentest)',
+        nameEs: 'Auditoría masiva de redes y Active Directory',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'La "navaja suiza" para pentesting en entornos Microsoft Windows / Active Directory. Permite validar credenciales en masa sobre SMB, WinRM, WMI y SSH, realizar movimiento lateral y volcar hashes de memoria (LSASS).',
+        syntax: 'crackmapexec smb 192.168.1.0/24 -u usuario -p pass --lsa',
+        flags: [
+          { flag: 'smb / winrm / ssh', desc: 'Especifica el protocolo de red contra el que atacar.' },
+          { flag: '--sam / --lsa', desc: 'Vuelca los almacenes de contraseñas SAM y secretos LSA si se tienen permisos de Admin.' }
+        ],
+        scenario: 'Evaluación rápida de contraseñas compartidas y escalada de privilegios en redes corporativas Windows.'
+      },
+      {
+        letter: 'D',
+        cmd: 'duckhunter',
+        nameEn: 'DuckHunter (HID Rubber Ducky)',
+        nameEs: 'Emulador de teclado malicioso (BadUSB HID)',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Convierte el teléfono Android en un Rubber Ducky de hardware. Al conectarlo por USB, inyecta pulsaciones de teclado a velocidades sobrehumanas para abrir la consola (CMD o PowerShell en Windows / Terminal en Linux) y ejecutar payloads sin que el antivirus lo impida.',
+        syntax: 'nh -r "duckhunter -l es payload.ducky"',
+        flags: [
+          { flag: '-l <idioma>', desc: 'Configura la distribución del teclado (ej. es para español, us para teclado inglés).' },
+          { flag: '<script>', desc: 'Archivo con instrucciones DuckyScript (STRING, DELAY, ENTER, GUI r).' }
+        ],
+        scenario: 'Ataques físicos rápidos en recepciones o puestos de trabajo desatendidos durante una intrusión física.'
+      },
+      {
+        letter: 'D',
+        cmd: 'dirb',
+        nameEn: 'DIRB (Web Content Scanner)',
+        nameEs: 'Escáner de directorios web ocultos',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta clásica de auditoría web basada en ataques de diccionario contra servidores HTTP/HTTPS para descubrir páginas de login, respaldos y directorios ocultos no enlazados en el código HTML.',
+        syntax: 'dirb http://192.168.1.50 /usr/share/wordlists/dirb/common.txt',
+        flags: [
+          { flag: '-X .php,.txt', desc: 'Agrega extensiones automáticas a cada palabra buscada.' },
+          { flag: '-r', desc: 'No busca recursivamente en los subdirectorios encontrados.' }
+        ],
+        scenario: 'Descubrimiento de paneles administrativos ocultos (ej. /admin, /backup.zip, /config.php).'
+      },
+      {
+        letter: 'D',
+        cmd: 'dnsrecon',
+        nameEn: 'DNSRecon (DNS Enumeration)',
+        nameEs: 'Enumerador avanzado de registros DNS',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Permite auditar servidores DNS en busca de transferencias de zona no autorizadas (AXFR), registros SPF, servidores de correo (MX), registros TXT confidenciales y fuerza bruta de subdominios.',
+        syntax: 'dnsrecon -d dominio.com -t axfr',
+        flags: [
+          { flag: '-d <dominio>', desc: 'Dominio objetivo.' },
+          { flag: '-t <tipo>', desc: 'Tipo de prueba: axfr (transferencia de zona), brt (fuerza bruta de subdominios), std (estándar).' }
+        ],
+        scenario: 'Mapeo inicial de toda la infraestructura y servidores pertenecientes a una organización.'
+      },
+
+      {
+        letter: 'E',
+        cmd: 'enum4linux',
+        nameEn: 'Enum4linux (SMB & Windows Enum)',
+        nameEs: 'Enumeración completa de sistemas Windows / Samba',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Script de recolección de información que extrae usuarios, grupos de dominio, recursos compartidos (shares), políticas de contraseña y SIDs de máquinas Windows y servidores Linux Samba mediante sesiones nulas.',
+        syntax: 'enum4linux -a 192.168.1.100',
+        flags: [
+          { flag: '-a', desc: 'Ejecuta todas las pruebas simples de enumeración simultáneamente.' },
+          { flag: '-U', desc: 'Obtiene la lista completa de nombres de usuario.' },
+          { flag: '-S', desc: 'Enumera las carpetas y recursos compartidos disponibles en SMB.' }
+        ],
+        scenario: 'Fase de reconocimiento interno tras obtener acceso a la red local de una oficina.'
+      },
+      {
+        letter: 'E',
+        cmd: 'ettercap',
+        nameEn: 'Ettercap (Man-in-the-Middle Suite)',
+        nameEs: 'Suite integral para ataques Man-in-the-Middle',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Herramienta de auditoría para redes locales conmutadas (LAN). Implementa envenenamiento ARP (ARP Spoofing), intercepción de conexiones vivas, inyección de filtros y recolección pasiva de contraseñas no cifradas.',
+        syntax: 'ettercap -T -q -M arp:remote /192.168.1.1// /192.168.1.50//',
+        flags: [
+          { flag: '-T', desc: 'Modo consola (texto) ideal para terminales remotas o NetHunter.' },
+          { flag: '-q', desc: 'Modo silencioso, solo muestra información crítica.' },
+          { flag: '-M arp:remote', desc: 'Aplica envenenamiento ARP bidireccional entre la víctima y la puerta de enlace.' }
+        ],
+        scenario: 'Auditorías de seguridad en redes corporativas para demostrar los peligros del tráfico en texto plano.'
+      },
+      {
+        letter: 'E',
+        cmd: 'evil-winrm',
+        nameEn: 'Evil-WinRM (Windows Shell)',
+        nameEs: 'Shell remota de administración para Windows',
+        category: 'web',
+        env: 'Kali Linux',
+        desc: 'La herramienta definitiva para post-explotación en máquinas Windows con el servicio WinRM (puertos 5985/5986) activo. Permite subir y descargar archivos, cargar scripts PowerShell en memoria y eludir restricciones.',
+        syntax: 'evil-winrm -i 192.168.1.10 -u Administrator -p "Clave123!"',
+        flags: [
+          { flag: '-i <ip>', desc: 'Dirección IP de la máquina Windows objetivo.' },
+          { flag: '-H <hash>', desc: 'Permite autenticación Pass-The-Hash sin conocer la contraseña en texto plano.' }
+        ],
+        scenario: 'Obtención de una consola interactiva de PowerShell tras haber obtenido credenciales de administrador.'
+      },
+      {
+        letter: 'F',
+        cmd: 'ffuf',
+        nameEn: 'FFUF (Fast Web Fuzzer)',
+        nameEs: 'Fuzzer web ultrarrápido en Go',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Fuzzer web de altísima velocidad utilizado para descubrir rutas ocultas, subdominios virtuales, parámetros GET/POST y cabeceras reemplazando la palabra clave FUZZ por elementos de un diccionario.',
+        syntax: 'ffuf -u http://sitio.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -mc 200,301',
+        flags: [
+          { flag: '-u <url>', desc: 'URL con la palabra clave FUZZ en el lugar deseado.' },
+          { flag: '-w <wordlist>', desc: 'Ruta del diccionario de palabras.' },
+          { flag: '-mc <code>', desc: 'Filtra respuestas únicamente por códigos de estado HTTP (ej. 200, 301).' },
+          { flag: '-fs <bytes>', desc: 'Oculta respuestas que tengan un tamaño determinado (para descartar páginas de error falsas).' }
+        ],
+        scenario: 'Búsqueda ultrarrápida de archivos sensibles (.env, .git, config.json) en servidores web modernos.'
+      },
+      {
+        letter: 'F',
+        cmd: 'fierce',
+        nameEn: 'Fierce (DNS Reconnaissance)',
+        nameEs: 'Localizador de subdominios y rangos no contiguos',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Herramienta de reconocimiento de redes orientada a encontrar objetivos empresariales en espacios de direcciones IP corporativos mediante fuerza bruta DNS y comprobaciones de servidores de nombres.',
+        syntax: 'fierce --domain empresa.com',
+        flags: [
+          { flag: '--domain', desc: 'Dominio de la organización a evaluar.' },
+          { flag: '--subkl', desc: 'Permite pasar un diccionario de subdominios personalizado.' }
+        ],
+        scenario: 'Identificación de rangos IP internos o servicios alojados en la nube pertenecientes a la empresa.'
+      },
+      {
+        letter: 'G',
+        cmd: 'gobuster',
+        nameEn: 'Gobuster (Directory & DNS Fuzzer)',
+        nameEs: 'Buscador de directorios, vhosts y subdominios',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta de fuerza bruta escrita en Go para descubrir URIs (directorios y ficheros) en sitios web, subdominios DNS, nombres de Virtual Hosts en servidores compartidos y buckets S3 públicos.',
+        syntax: 'gobuster dir -u http://10.10.10.10 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 40',
+        flags: [
+          { flag: 'dir / dns / vhost', desc: 'Selecciona el modo de operación (rutas web, subdominios o hosts virtuales).' },
+          { flag: '-t <hilos>', desc: 'Cantidad de peticiones concurrentes para máxima velocidad.' },
+          { flag: '-x <ext>', desc: 'Extensiones a comprobar (ej. -x php,html,txt).' }
+        ],
+        scenario: 'Reconocimiento forzado y rápido de rutas ocultas en auditorías de aplicaciones web.'
+      },
+      {
+        letter: 'G',
+        cmd: 'gqrx',
+        nameEn: 'Gqrx SDR (Software Defined Radio)',
+        nameEs: 'Receptor de radio definida por software',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Receptor de radio de código abierto compatible con dispositivos RTL-SDR y HackRF One. Permite demodular señales AM, FM, SSB, y analizar cascadas de espectro de radio en tiempo real.',
+        syntax: 'gqrx &',
+        flags: [
+          { flag: 'GUI', desc: 'Ajuste de frecuencia, ganancia, filtros de reducción de ruido y grabación de audio I/Q.' }
+        ],
+        scenario: 'Auditoría de frecuencias de radio en NetHunter o Kali (sensores IoT, alarmas, mandos a distancia 433MHz).'
+      },
+      {
+        letter: 'H',
+        cmd: 'hashcat',
+        nameEn: 'Hashcat (Password Recovery GPU)',
+        nameEs: 'Auditor de contraseñas acelerado por GPU',
+        category: 'pass',
+        env: 'Ambos',
+        desc: 'El recuperador y cracker de contraseñas más rápido del mundo. Utiliza la potencia de cálculo masivo paralelo de tarjetas gráficas (OpenCL/CUDA) para descifrar cientos de tipos de hashes (MD5, SHA256, NTLM, WPA/WPA2, ZIP cifrados).',
+        syntax: 'hashcat -m 1000 -a 0 hashes_ntlm.txt rockyou.txt',
+        flags: [
+          { flag: '-m <modo>', desc: 'Tipo de hash (0=MD5, 1000=NTLM, 2500=WPA/WPA2, 1800=sha512crypt).' },
+          { flag: '-a <ataque>', desc: 'Tipo de ataque (0=Diccionario, 3=Fuerza bruta con máscaras).' },
+          { flag: '-O', desc: 'Activa optimizaciones de kernel de cómputo para mayor velocidad.' }
+        ],
+        scenario: 'Descifrado masivo de hashes de usuarios obtenidos tras comprometer un controlador de dominio Windows.'
+      },
+      {
+        letter: 'H',
+        cmd: 'hydra',
+        nameEn: 'THC-Hydra (Online Brute-Forcer)',
+        nameEs: 'Atacante de fuerza bruta para servicios de red',
+        category: 'pass',
+        env: 'Ambos',
+        desc: 'Herramienta de ataque en línea muy rápida compatible con más de 50 protocolos de red (SSH, FTP, RDP, Telnet, HTTP-POST-FORM, MySQL, SMB, VNC) para comprobar la seguridad de las contraseñas de acceso.',
+        syntax: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt 192.168.1.1 ssh',
+        flags: [
+          { flag: '-l / -L', desc: 'Usuario único (-l) o lista de usuarios a probar (-L).' },
+          { flag: '-p / -P', desc: 'Contraseña fija (-p) o diccionario de contraseñas (-P).' },
+          { flag: '-t <hilos>', desc: 'Conexiones concurrentes (por defecto 16).' }
+        ],
+        scenario: 'Evaluación de robustez de accesos remotos SSH, paneles web y servidores de bases de datos.'
+      },
+      {
+        letter: 'H',
+        cmd: 'hcitool',
+        nameEn: 'HCITool (Bluetooth Controller)',
+        nameEs: 'Gestión y escaneo de adaptadores Bluetooth',
+        category: 'nethunter',
+        env: 'Ambos',
+        desc: 'Comando nativo de la pila BlueZ para interactuar con chips Bluetooth integrados o adaptadores USB en Kali y NetHunter. Permite activar interfaces, escanear dispositivos cercanos y obtener direcciones BD_ADDR.',
+        syntax: 'hcitool dev && hcitool scan',
+        flags: [
+          { flag: 'dev', desc: 'Muestra las interfaces Bluetooth disponibles (ej. hci0).' },
+          { flag: 'scan', desc: 'Escanea dispositivos Bluetooth clásicos visibles en las inmediaciones.' },
+          { flag: 'lescan', desc: 'Escanea balizas y dispositivos Bluetooth Low Energy (BLE).' }
+        ],
+        scenario: 'Auditoría inalámbrica de dispositivos portables, cerraduras inteligentes y auriculares con NetHunter.'
+      },
+
+      {
+        letter: 'I',
+        cmd: 'ip',
+        nameEn: 'IP (Network Route / Device Tool)',
+        nameEs: 'Gestor y visor integral de interfaces de red',
+        category: 'core',
+        env: 'Ambos',
+        desc: 'Comando fundamental del paquete iproute2 en Linux moderno que reemplaza a ifconfig. Muestra y modifica direcciones IP, interfaces de red, tablas de enrutamiento y túneles.',
+        syntax: 'ip a show wlan0',
+        flags: [
+          { flag: 'a / addr', desc: 'Muestra las direcciones IP asignadas a todas las interfaces.' },
+          { flag: 'link set <iface> up/down', desc: 'Enciende o apaga una tarjeta de red.' },
+          { flag: 'route', desc: 'Muestra la tabla de enrutamiento y la puerta de enlace predeterminada.' }
+        ],
+        scenario: 'Configuración de red esencial previa a lanzar ataques MitM o tras conectar adaptadores USB OTG.'
+      },
+      {
+        letter: 'I',
+        cmd: 'iwconfig',
+        nameEn: 'IWConfig (Wireless Extensions)',
+        nameEs: 'Configuración de parámetros de tarjetas WiFi',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Permite inspeccionar y configurar interfaces inalámbricas en Linux: ver el modo actual (Managed, Monitor), la frecuencia, potencia de transmisión (Tx-Power) y el SSID asociado.',
+        syntax: 'iwconfig wlan0mon',
+        flags: [
+          { flag: 'mode monitor', desc: 'Cambia manualmente la interfaz a modo escucha sin herramientas adicionales.' },
+          { flag: 'channel <num>', desc: 'Fija el canal de escucha de la tarjeta.' }
+        ],
+        scenario: 'Verificación inmediata de si un adaptador WiFi externo ha entrado con éxito en modo monitor.'
+      },
+      {
+        letter: 'J',
+        cmd: 'john',
+        nameEn: 'John the Ripper (Password Cracker)',
+        nameEs: 'Descifrador de contraseñas offline multipropósito',
+        category: 'pass',
+        env: 'Ambos',
+        desc: 'Legendaria herramienta de descifrado de contraseñas fuera de línea. Detecta automáticamente el tipo de hash, soporta reglas de mutación de palabras y cuenta con convertidores específicos (ssh2john, zip2john, keepass2john).',
+        syntax: 'john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt',
+        flags: [
+          { flag: '--format=<tipo>', desc: 'Fuerza el algoritmo (ej. sha512crypt, raw-md5, nt).' },
+          { flag: '--show', desc: 'Muestra las contraseñas que ya han sido descifradas con anterioridad.' },
+          { flag: '--rules', desc: 'Aplica reglas lingüísticas de modificación sobre el diccionario.' }
+        ],
+        scenario: 'Auditoría del fichero de contraseñas /etc/shadow en servidores Linux o archivos comprimidos protegidos.'
+      },
+      {
+        letter: 'J',
+        cmd: 'jadx',
+        nameEn: 'JADX (Dex to Java Decompiler)',
+        nameEs: 'Descompilador de aplicaciones Android (APK)',
+        category: 'nethunter',
+        env: 'Ambos',
+        desc: 'Herramienta de ingeniería inversa para ingeniería inversa de ejecutables Android (.dex, .apk, .jar). Convierte el bytecode Dalvik a código fuente legible en Java para analizar vulnerabilidades.',
+        syntax: 'jadx -d salida_codigo app.apk',
+        flags: [
+          { flag: '-d <dir>', desc: 'Directorio donde se extraerá el código descompilado.' },
+          { flag: 'jadx-gui', desc: 'Lanza la interfaz gráfica interactiva con visor de árboles de clases.' }
+        ],
+        scenario: 'Auditoría de seguridad en apps móviles Android para localizar secretos en el código, URLs o APIs inseguras.'
+      },
+      {
+        letter: 'K',
+        cmd: 'kex',
+        nameEn: 'NetHunter KeX (Desktop Experience)',
+        nameEs: 'Servidor gráfico de escritorio para NetHunter',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Inicia el servidor gráfico VNC interno de Kali NetHunter para proyectar el escritorio completo XFCE de Kali en la pantalla del móvil, o conectarlo por HDMI/Type-C a un monitor convirtiéndolo en un ordenador de bolsillo.',
+        syntax: 'kex --esm',
+        flags: [
+          { flag: 'passwd', desc: 'Establece la clave de acceso para la sesión gráfica.' },
+          { flag: 'stop', desc: 'Detiene el servidor KeX para liberar memoria RAM y batería del smartphone.' },
+          { flag: '--esm', desc: 'Inicia el modo de compartición de pantalla optimizado.' }
+        ],
+        scenario: 'Uso de herramientas visuales como Burp Suite, Wireshark o Ghidra directamente desde el móvil.'
+      },
+      {
+        letter: 'K',
+        cmd: 'killkali',
+        nameEn: 'KillKali (Chroot Terminator)',
+        nameEs: 'Detención y desmontaje del contenedor NetHunter',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Script de apagado seguro para Kali NetHunter. Detiene todos los procesos y demonios que estén corriendo en el chroot y desmonta de forma limpia las particiones montadas en el almacenamiento de Android.',
+        syntax: 'su -c killkali',
+        flags: [
+          { flag: 'Sin argumentos', desc: 'Finaliza servicios para que el teléfono no sufra drenaje de batería ni bloqueos.' }
+        ],
+        scenario: 'Mantenimiento del móvil tras terminar una sesión de auditoría inalámbrica o de intrusión.'
+      },
+      {
+        letter: 'K',
+        cmd: 'kismet',
+        nameEn: 'Kismet (Wireless Network Detector)',
+        nameEs: 'Detector pasivo de redes WiFi, Bluetooth y RF',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Potente detector pasivo de redes y analizador de paquetes inalámbricos. A diferencia de airodump, detecta redes ocultas mediante paquetes de sonda, clientes no asociados y se integra con GPS para realizar war-driving.',
+        syntax: 'kismet -c wlan0mon',
+        flags: [
+          { flag: '-c <fuente>', desc: 'Especifica la tarjeta de captura a utilizar.' },
+          { flag: '--no-ncurses', desc: 'Inicia el servidor web backend para ver los mapas y gráficos en el navegador.' }
+        ],
+        scenario: 'Mapeo geoespacial pasivo de redes WiFi y dispositivos Bluetooth en auditorías físicas de exterior.'
+      },
+      {
+        letter: 'L',
+        cmd: 'ls',
+        nameEn: 'LS (List Directory Contents)',
+        nameEs: 'Listar archivos y carpetas del sistema',
+        category: 'core',
+        env: 'Ambos',
+        desc: 'El comando más utilizado en sistemas Unix. Muestra los archivos y subdirectorios de la ruta actual o especificada, con opciones para ver permisos de usuario, propietario, tamaño y fechas.',
+        syntax: 'ls -lah /var/www/html',
+        flags: [
+          { flag: '-l', desc: 'Formato largo: muestra permisos (rwx), dueño, grupo y peso.' },
+          { flag: '-a', desc: 'Muestra todos los archivos, incluyendo archivos ocultos que empiezan por punto.' },
+          { flag: '-h', desc: 'Muestra tamaños de archivo en formato legible para humanos (KB, MB, GB).' }
+        ],
+        scenario: 'Navegación e inspección inicial al tomar control de una consola remota.'
+      },
+      {
+        letter: 'L',
+        cmd: 'lsof',
+        nameEn: 'LSOF (List Open Files)',
+        nameEs: 'Muestra archivos y puertos de red abiertos por procesos',
+        category: 'core',
+        env: 'Ambos',
+        desc: 'Lista todos los archivos abiertos por los procesos del sistema. Dado que en Unix "todo es un archivo", lsof permite ver conexiones de red activas, puertos escuchando y archivos bloqueados en disco.',
+        syntax: 'lsof -i :4444',
+        flags: [
+          { flag: '-i :<puerto>', desc: 'Indica qué proceso está utilizando un determinado puerto TCP/UDP.' },
+          { flag: '-u <usuario>', desc: 'Muestra los ficheros abiertos por un usuario concreto.' }
+        ],
+        scenario: 'Forense e investigación de shells reversas o servicios sospechosos activos en segundo plano.'
+      },
+      {
+        letter: 'L',
+        cmd: 'lsusb',
+        nameEn: 'LSUSB (List USB Devices)',
+        nameEs: 'Listar dispositivos y adaptadores USB conectados',
+        category: 'core',
+        env: 'Ambos',
+        desc: 'Muestra todos los dispositivos conectados mediante el bus USB. Esencial en Kali NetHunter para comprobar si el cable OTG ha reconocido correctamente la tarjeta WiFi externa o el dongle SDR.',
+        syntax: 'lsusb',
+        flags: [
+          { flag: '-v', desc: 'Muestra información detallada (fabricante, chipset, consumo de energía).' }
+        ],
+        scenario: 'Diagnóstico de hardware externo (tarjetas Alfa, HackRF, teclados) antes de lanzar ataques.'
+      },
+
+      {
+        letter: 'M',
+        cmd: 'msfconsole',
+        nameEn: 'MSFConsole (Metasploit Framework)',
+        nameEs: 'Consola del Framework de Explotación Metasploit',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'La plataforma de explotación de vulnerabilidades más potente del mundo. Contiene miles de módulos de exploits, payloads, herramientas de post-explotación y escáneres auxiliares para validar fallos de seguridad.',
+        syntax: 'msfconsole -q',
+        flags: [
+          { flag: '-q', desc: 'Inicio rápido y silencioso sin mostrar los banners de inicio.' },
+          { flag: '-r <script.rc>', desc: 'Carga un archivo de recursos con comandos automatizados predefinidos.' }
+        ],
+        scenario: 'Lanzamiento de exploits comprobados y gestión centralizada de sesiones Meterpreter.'
+      },
+      {
+        letter: 'M',
+        cmd: 'msfvenom',
+        nameEn: 'MSFVenom (Payload Generator)',
+        nameEs: 'Generador de payloads y binarios ejecutables',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Combina el generador de payloads y la codificación de Metasploit. Permite crear ejecutables (.exe, .elf, .apk, .war, .php, shellcode) con shells reversas personalizadas para cualquier arquitectura.',
+        syntax: 'msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.50 LPORT=4444 -f exe -o malware_test.exe',
+        flags: [
+          { flag: '-p <payload>', desc: 'Especifica el payload (ej. windows/meterpreter/reverse_tcp).' },
+          { flag: '-f <formato>', desc: 'Formato de salida (exe, elf, raw, c, asp, war).' },
+          { flag: 'LHOST / LPORT', desc: 'Dirección IP y puerto local donde el atacante esperará la conexión.' }
+        ],
+        scenario: 'Creación de agentes para ejercicios de Red Team, pruebas de antivirus y post-explotación.'
+      },
+      {
+        letter: 'M',
+        cmd: 'macchanger',
+        nameEn: 'MacChanger (MAC Address Spoofing)',
+        nameEs: 'Modificador y suplantador de direcciones MAC',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Permite visualizar, cambiar de manera aleatoria o asignar una dirección MAC específica a interfaces Ethernet o WiFi para evadir listas blancas de routers o proteger la privacidad del auditor.',
+        syntax: 'macchanger -r wlan0',
+        flags: [
+          { flag: '-r', desc: 'Genera una dirección MAC completamente aleatoria y válida.' },
+          { flag: '-s <iface>', desc: 'Muestra la MAC actual y la grabada de fábrica en el hardware.' },
+          { flag: '-m <MAC>', desc: 'Establece manualmente una dirección física específica.' }
+        ],
+        scenario: 'Evasión de filtrado MAC en portales cautivos de hoteles o auditorías inalámbricas anónimas.'
+      },
+      {
+        letter: 'M',
+        cmd: 'masscan',
+        nameEn: 'Masscan (Mass Port Scanner)',
+        nameEs: 'Escáner masivo de puertos a escala de Internet',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'El escáner de puertos de red más rápido existente. Utiliza su propia pila de red asíncrona capaz de transmitir paquetes SYN a velocidades de millones de paquetes por segundo, pudiendo escanear todo Internet en minutos.',
+        syntax: 'masscan -p80,443 192.168.1.0/24 --rate=1000',
+        flags: [
+          { flag: '--rate <pps>', desc: 'Cantidad de paquetes por segundo a transmitir.' },
+          { flag: '-p <puertos>', desc: 'Rango de puertos a auditar (ej. 1-65535 o lista separada por comas).' }
+        ],
+        scenario: 'Escaneo veloz de grandes bloques de red corporativos (rangos /16 o /8).'
+      },
+      {
+        letter: 'N',
+        cmd: 'nmap',
+        nameEn: 'Nmap (Network Mapper)',
+        nameEs: 'Mapeador de redes y detector de servicios',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'El rey de los escáneres de seguridad. Descubre hosts activos, puertos abiertos, servicios y versiones exactas, huella de sistemas operativos y ejecuta scripts de comprobación de vulnerabilidades (NSE).',
+        syntax: 'nmap -sS -sV -O -p- 192.168.1.1',
+        flags: [
+          { flag: '-sS', desc: 'Escaneo SYN silencioso (sigiloso, sin completar la conexión TCP).' },
+          { flag: '-sV', desc: 'Indaga en los puertos abiertos para determinar la versión real del servicio.' },
+          { flag: '-O', desc: 'Detección activa del sistema operativo mediante análisis de respuestas TCP/IP.' },
+          { flag: '--script vuln', desc: 'Ejecuta scripts NSE para verificar vulnerabilidades conocidas en los servicios.' }
+        ],
+        scenario: 'Fase de descubrimiento y enumeración obligatoria en cualquier test de penetración.'
+      },
+      {
+        letter: 'N',
+        cmd: 'nethunter',
+        nameEn: 'NetHunter CLI (nh Launcher)',
+        nameEs: 'Lanzador de consola interactiva NetHunter',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'El comando maestro para entrar en la terminal de Kali Linux desde la aplicación de terminal de Android o Termux. Permite ejecutar todo el ecosistema de herramientas de Kali dentro del chroot.',
+        syntax: 'nh',
+        flags: [
+          { flag: '-r', desc: 'Entra a la sesión directamente con privilegios de superusuario (root).' },
+          { flag: '-c "<comando>"', desc: 'Ejecuta un comando en Kali y vuelve de inmediato a Android sin abrir shell interactiva.' }
+        ],
+        scenario: 'Punto de entrada diario para cualquier auditor que use Kali NetHunter en un teléfono móvil.'
+      },
+      {
+        letter: 'N',
+        cmd: 'nikto',
+        nameEn: 'Nikto (Web Server Scanner)',
+        nameEs: 'Escáner de vulnerabilidades para servidores web',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Escáner especializado en detectar servidores web mal configurados, software desactualizado, archivos peligrosos por defecto, problemas de certificados SSL y cabeceras inseguras.',
+        syntax: 'nikto -h http://192.168.1.20',
+        flags: [
+          { flag: '-h <host>', desc: 'Servidor o dirección IP objetivo.' },
+          { flag: '-ssl', desc: 'Fuerza el escaneo a través de HTTPS.' },
+          { flag: '-o reporte.html', desc: 'Exporta los hallazgos en formato HTML.' }
+        ],
+        scenario: 'Comprobación rápida de configuración de servidores Apache, Nginx o IIS en auditorías perimetrales.'
+      },
+      {
+        letter: 'N',
+        cmd: 'netcat',
+        nameEn: 'Netcat (nc - Swiss Army Knife)',
+        nameEs: 'Navaja suiza de conexiones TCP/UDP',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Herramienta versátil capaz de leer y escribir datos a través de conexiones de red TCP o UDP. Se usa como listener de shells reversas, para transferencia rápida de archivos o escaneo rudimentario de puertos.',
+        syntax: 'nc -lvnp 4444',
+        flags: [
+          { flag: '-l', desc: 'Modo escucha (escucha conexiones entrantes en vez de iniciar una).' },
+          { flag: '-v', desc: 'Modo detallado (verbose).' },
+          { flag: '-n', desc: 'No resuelve nombres DNS (solo direcciones IP numéricas para mayor rapidez).' },
+          { flag: '-p <puerto>', desc: 'Especifica el número de puerto local.' }
+        ],
+        scenario: 'Recepción de reverse shells provenientes de payloads o exploits ejecutados en el objetivo.'
+      },
+      {
+        letter: 'O',
+        cmd: 'onesixtyone',
+        nameEn: 'Onesixtyone (SNMP Scanner)',
+        nameEs: 'Escáner rápido de cadenas comunitarias SNMP',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'Escáner SNMP eficiente capaz de enviar peticiones a múltiples máquinas simultáneamente para descubrir cadenas comunitarias (como "public" o "private") en routers, impresoras y conmutadores.',
+        syntax: 'onesixtyone -c /usr/share/doc/onesixtyone/dict.txt 192.168.1.1',
+        flags: [
+          { flag: '-c <diccionario>', desc: 'Lista de posibles cadenas de comunidad SNMP a comprobar.' }
+        ],
+        scenario: 'Extracción de información del sistema, interfaces de red y usuarios mediante SNMP mal configurado.'
+      },
+      {
+        letter: 'O',
+        cmd: 'openvas',
+        nameEn: 'OpenVAS / GVM (Vulnerability Manager)',
+        nameEs: 'Gestor y escáner integral de vulnerabilidades',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'Escáner de vulnerabilidades de grado empresarial con una base de datos actualizada de miles de pruebas (NVTs). Genera informes detallados de riesgos clasificados por CVSS en sistemas de red.',
+        syntax: 'gvm-start',
+        flags: [
+          { flag: 'gvm-start / stop', desc: 'Inicia o detiene los demonios y el servicio web Greenbone en segundo plano.' }
+        ],
+        scenario: 'Auditorías de cumplimiento y análisis de vulnerabilidades corporativas a gran escala.'
+      },
+      {
+        letter: 'P',
+        cmd: 'proxychains',
+        nameEn: 'ProxyChains-NG (Traffic Router)',
+        nameEs: 'Enrutador forzado de comandos a través de proxys',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Obliga a cualquier comando o herramienta de terminal (como nmap, curl o ssh) a pasar todas sus conexiones TCP a través de una cadena de servidores proxy (SOCKS4, SOCKS5, HTTP o red Tor).',
+        syntax: 'proxychains4 nmap -sT -Pn 10.10.10.10',
+        flags: [
+          { flag: '-q', desc: 'Modo silencioso, oculta los mensajes de depuración de conexión en la terminal.' },
+          { flag: '/etc/proxychains4.conf', desc: 'Fichero donde se configuran los servidores proxy (incluido 127.0.0.1:9050 para Tor).' }
+        ],
+        scenario: 'Auditorías sigilosas donde se requiere ocultar la dirección IP real de origen o pivotar hacia redes internas.'
+      },
+      {
+        letter: 'P',
+        cmd: 'payload-mask',
+        nameEn: 'NetHunter HID Converter',
+        nameEs: 'Conversor y preparador de cargas HID',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Utilidad integrada en los módulos de NetHunter para transformar scripts de teclado de formato Ducky a cadenas binarias crudas para el driver `/dev/hidg0` de Android, permitiendo inyecciones USB directas.',
+        syntax: 'nh -r "cat payload.txt > /dev/hidg0"',
+        flags: [
+          { flag: '/dev/hidg0', desc: 'Dispositivo de caracteres de teclado emulado por el kernel Android.' }
+        ],
+        scenario: 'Ejecución de automatizaciones de pulsaciones de teclado sin intermediarios de interfaz gráfica.'
+      },
+
+      {
+        letter: 'Q',
+        cmd: 'qrencode',
+        nameEn: 'QRencode (QR Code Generator)',
+        nameEs: 'Generador de códigos QR en terminal',
+        category: 'nethunter',
+        env: 'Ambos',
+        desc: 'Genera códigos QR directamente como caracteres ASCII en la terminal o como archivos de imagen PNG. Muy utilizado en NetHunter para transferir rápidamente URLs de payloads o configuraciones WiFi al móvil de la víctima.',
+        syntax: 'qrencode -t ANSI "http://192.168.1.50/payload.apk"',
+        flags: [
+          { flag: '-t ANSI', desc: 'Dibuja el código QR directamente en los caracteres de la consola de texto.' },
+          { flag: '-o <archivo.png>', desc: 'Exporta el código QR generado a una imagen PNG.' }
+        ],
+        scenario: 'Ataques de ingeniería social rápida o pase de enlaces entre el móvil del pentester y el entorno.'
+      },
+      {
+        letter: 'R',
+        cmd: 'responder',
+        nameEn: 'Responder (LLMNR / NBT-NS Poisoner)',
+        nameEs: 'Envenenador de resoluciones NetBIOS y LLMNR',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Herramienta de ataque a nivel de red que responde a peticiones de nombres erróneas en Windows (LLMNR, NBT-NS y mDNS), haciéndose pasar por el servidor buscado para obligar a la víctima a autenticarse y capturar sus hashes NTLMv1/NTLMv2.',
+        syntax: 'sudo responder -I eth0 -dwv',
+        flags: [
+          { flag: '-I <interfaz>', desc: 'Interfaz de red por la que escuchar (ej. eth0 o usb0 en BadUSB).' },
+          { flag: '-d', desc: 'Habilita respuestas a consultas de nombres DNS de la red.' },
+          { flag: '-w', desc: 'Inicia un servidor proxy WPAD malicioso para capturar todo el tráfico web del equipo.' }
+        ],
+        scenario: 'Captura inmediata de hashes de contraseñas de usuarios en redes empresariales con Windows.'
+      },
+      {
+        letter: 'R',
+        cmd: 'rtl_sdr',
+        nameEn: 'RTL-SDR (Software Radio CLI)',
+        nameEs: 'Capturador de muestras I/Q de radiofrecuencia',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Utilidad por línea de comandos para sintonizar y volcar datos de radio sin procesar utilizando receptores USB RTL2832U de bajo coste conectados a Kali o mediante cable USB OTG a Kali NetHunter.',
+        syntax: 'rtl_sdr -f 433.92M -s 2048000 captura.bin',
+        flags: [
+          { flag: '-f <Hz>', desc: 'Frecuencia central de sintonización (ej. 433.92M para mandos o 1090M para aviones ADS-B).' },
+          { flag: '-s <tasa>', desc: 'Frecuencia de muestreo en hercios.' }
+        ],
+        scenario: 'Inspección de señales de radiofrecuencia, sensores de presión de neumáticos o telemandos con el móvil.'
+      },
+      {
+        letter: 'S',
+        cmd: 'sqlmap',
+        nameEn: 'SQLMap (Automatic SQL Injection)',
+        nameEs: 'Auditor y explotador automático de inyecciones SQL',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta líder mundial para detectar y explotar vulnerabilidades de inyección SQL (SQLi). Toma el control total de bases de datos remotas (MySQL, Oracle, PostgreSQL, MSSQL) y vuelca tablas, usuarios y hashes.',
+        syntax: 'sqlmap -u "http://sitio.com/ver.php?id=1" --dbs --batch',
+        flags: [
+          { flag: '-u <url>', desc: 'URL con el parámetro a auditar.' },
+          { flag: '--dbs', desc: 'Enumera todas las bases de datos presentes en el servidor.' },
+          { flag: '--dump', desc: 'Vuelca los datos de las tablas identificadas.' },
+          { flag: '--batch', desc: 'Modo desatendido, responde afirmativamente por defecto a todas las preguntas.' }
+        ],
+        scenario: 'Evaluación exhaustiva de seguridad en formularios web y parámetros de backend.'
+      },
+      {
+        letter: 'S',
+        cmd: 'spooftooph',
+        nameEn: 'SpoofTooph (Bluetooth Cloner)',
+        nameEs: 'Clonador y suplantador de perfiles Bluetooth',
+        category: 'nethunter',
+        env: 'Kali NetHunter',
+        desc: 'Herramienta diseñada para automatizar la clonación de nombres, perfiles de clase de dispositivo (CoD) y direcciones MAC de dispositivos Bluetooth para realizar suplantaciones en entornos móviles.',
+        syntax: 'spooftooph -i hci0 -a 00:11:22:33:44:55',
+        flags: [
+          { flag: '-i <interfaz>', desc: 'Dispositivo bluetooth local a usar (hci0).' },
+          { flag: '-a <MAC>', desc: 'Dirección física Bluetooth a suplantar.' },
+          { flag: '-r', desc: 'Asigna una dirección y nombre aleatorios.' }
+        ],
+        scenario: 'Suplantación de auriculares y manos libres en pruebas de seguridad física y vehicular con NetHunter.'
+      },
+      {
+        letter: 'S',
+        cmd: 'sslsplit',
+        nameEn: 'SSLsplit (SSL/TLS Interception)',
+        nameEs: 'Intercepción transparente de tráfico SSL/TLS',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta para ataques Man-in-the-Middle contra conexiones cifradas de red. Termina de forma transparente conexiones SSL/TLS y genera certificados dinámicos para inspeccionar peticiones HTTPS en texto claro.',
+        syntax: 'sslsplit -k ca.key -c ca.crt https 0.0.0.0 8443',
+        flags: [
+          { flag: '-k / -c', desc: 'Clave privada y certificado de la autoridad CA falsa.' },
+          { flag: '-l <log>', desc: 'Registra todas las conexiones descifradas en un archivo de log.' }
+        ],
+        scenario: 'Auditoría de aplicaciones que no implementan correctamente SSL Pinning en una red intervenida.'
+      },
+      {
+        letter: 'T',
+        cmd: 'theHarvester',
+        nameEn: 'TheHarvester (OSINT Information Gathering)',
+        nameEs: 'Recolector de correos, nombres y subdominios OSINT',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Herramienta de inteligencia de fuentes abiertas (OSINT) que rastrea motores de búsqueda (Google, Bing, Yahoo), redes sociales (LinkedIn) y bases de datos públicas para recolectar correos electrónicos de empleados y nombres.',
+        syntax: 'theHarvester -d empresa.com -b google,linkedin -l 200',
+        flags: [
+          { flag: '-d <dominio>', desc: 'Empresa o dominio a investigar.' },
+          { flag: '-b <fuentes>', desc: 'Motores o fuentes a consultar (google, bing, crtsh, linkedin).' },
+          { flag: '-l <limite>', desc: 'Límite de resultados a recopilar.' }
+        ],
+        scenario: 'Fase de reconocimiento pasivo previa a campañas de simulación de phishing autorizado.'
+      },
+      {
+        letter: 'T',
+        cmd: 'tcpdump',
+        nameEn: 'TCPDump (Command-Line Packet Analyzer)',
+        nameEs: 'Analizador y capturador de tráfico de paquetes',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'El sniffer clásico por excelencia en la terminal de Linux. Captura en tiempo real los encabezados y cargas útiles de los paquetes de red que atraviesan una interfaz, con potentes filtros BPF.',
+        syntax: 'sudo tcpdump -i eth0 -nn "port 80 or port 443" -w trafico.pcap',
+        flags: [
+          { flag: '-i <interfaz>', desc: 'Selecciona la interfaz de red a escuchar.' },
+          { flag: '-nn', desc: 'No resuelve nombres de dominio ni números de puerto a servicios.' },
+          { flag: '-w <archivo.pcap>', desc: 'Guarda los paquetes capturados para abrirlos después con Wireshark.' }
+        ],
+        scenario: 'Diagnóstico de red, verificación de tráfico generado por exploits y análisis forense de paquetes.'
+      },
+      {
+        letter: 'U',
+        cmd: 'urlsnarf',
+        nameEn: 'URLSnarf (HTTP Request Sniffer)',
+        nameEs: 'Espía y registrador de URLs navegadas en la red',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Parte de la suite dsniff. Escucha una interfaz de red y registra todas las URLs y peticiones HTTP en formato Common Log Format navegadas por cualquier dispositivo en la misma red local.',
+        syntax: 'sudo urlsnarf -i wlan0',
+        flags: [
+          { flag: '-i <interfaz>', desc: 'Especifica la tarjeta de red en la que escuchar el tráfico.' }
+        ],
+        scenario: 'Visualización rápida del comportamiento de navegación en redes locales tras realizar ARP Spoofing.'
+      },
+      {
+        letter: 'U',
+        cmd: 'uname',
+        nameEn: 'Uname (System & Kernel Info)',
+        nameEs: 'Muestra información del sistema operativo y kernel',
+        category: 'core',
+        env: 'Ambos',
+        desc: 'Comando básico de Linux para inspeccionar el nombre del sistema, la versión del Kernel y la arquitectura del procesador (x86_64, aarch64, armv7l). Crítico en NetHunter para comprobar el soporte de inyección.',
+        syntax: 'uname -a',
+        flags: [
+          { flag: '-a', desc: 'Muestra toda la información disponible (kernel, versión, arquitectura, hostname).' },
+          { flag: '-r', desc: 'Imprime únicamente la versión exacta del kernel Linux.' }
+        ],
+        scenario: 'Búsqueda de exploits de escalada de privilegios locales de kernel (Dirty COW, etc.).'
+      },
+
+      {
+        letter: 'V',
+        cmd: 'volatility',
+        nameEn: 'Volatility (Memory Forensics Framework)',
+        nameEs: 'Framework de análisis forense de memoria RAM',
+        category: 'pass',
+        env: 'Kali Linux',
+        desc: 'El estándar mundial para el análisis forense de volcados de memoria volátil (RAM). Permite extraer procesos activos, conexiones de red abiertas, contraseñas en texto claro y malware residente en memoria.',
+        syntax: 'volatility -f memoria.raw --profile=Win10x64 pslist',
+        flags: [
+          { flag: '-f <volcado>', desc: 'Ruta del archivo de imagen de memoria RAM.' },
+          { flag: '--profile=<perfil>', desc: 'Especifica la versión exacta de sistema operativo analizado.' }
+        ],
+        scenario: 'Respuesta ante incidentes e investigación de intrusiones para descubrir artefactos que no tocan disco.'
+      },
+      {
+        letter: 'W',
+        cmd: 'wifite',
+        nameEn: 'Wifite (Automated Wireless Auditor)',
+        nameEs: 'Auditor WiFi totalmente automatizado',
+        category: 'wifi',
+        env: 'Ambos',
+        desc: 'Script automatizado en Python que orquesta todo el conjunto de herramientas de auditoría inalámbrica (airmon, airodump, aireplay, reaver, bully, tshark). Pone la tarjeta en modo monitor, ataca objetivos seleccionados y captura handshakes y claves WEP/WPA sin intervención manual compleja.',
+        syntax: 'sudo wifite -i wlan1mon --kill',
+        flags: [
+          { flag: '-i <iface>', desc: 'Fuerza el uso de una tarjeta WiFi concreta.' },
+          { flag: '--kill', desc: 'Mata procesos del sistema que bloquean el canal.' },
+          { flag: '--wpa', desc: 'Se enfoca únicamente en auditar redes WPA/WPA2.' },
+          { flag: '--pmkid', desc: 'Intenta capturar el PMKID del router sin necesidad de que haya clientes conectados.' }
+        ],
+        scenario: 'Auditoría inalámbrica táctica y rápida desde Kali NetHunter usando un adaptador USB externo.'
+      },
+      {
+        letter: 'W',
+        cmd: 'wireshark',
+        nameEn: 'Wireshark (Network Protocol Analyzer)',
+        nameEs: 'Analizador gráfico de protocolos de red',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'El analizador de protocolos de red más popular y completo del mundo. Permite capturar e interactuar con el tráfico a nivel de bit, filtrar por protocolos (TCP, HTTP, DNS, SMB) y reconstruir sesiones TCP completas.',
+        syntax: 'wireshark &',
+        flags: [
+          { flag: 'Filtro de captura', desc: 'Reglas para limitar qué paquetes se graban en memoria.' },
+          { flag: 'Filtro de display', desc: 'Expresiones avanzadas (ej. http.request.method == "POST") para aislar datos.' }
+        ],
+        scenario: 'Inspección minuciosa de flujos de datos y credenciales no cifradas que circulan por una red.'
+      },
+      {
+        letter: 'W',
+        cmd: 'wpscan',
+        nameEn: 'WPScan (WordPress Security Scanner)',
+        nameEs: 'Escáner de seguridad para CMS WordPress',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Escáner especializado en el gestor de contenidos WordPress. Identifica la versión exacta instalada, enumera plugins y plantillas con vulnerabilidades conocidas y realiza ataques de fuerza bruta contra usuarios.',
+        syntax: 'wpscan --url http://blog.com --enumerate u,vp',
+        flags: [
+          { flag: '--url <sitio>', desc: 'Dirección web del portal WordPress.' },
+          { flag: '--enumerate u', desc: 'Enumera todos los nombres de usuario registrados en la web.' },
+          { flag: '--enumerate vp', desc: 'Enumera plugins con vulnerabilidades críticas conocidas.' }
+        ],
+        scenario: 'Auditoría de sitios web corporativos y blogs basados en la plataforma WordPress.'
+      },
+      {
+        letter: 'X',
+        cmd: 'xsser',
+        nameEn: 'XSSer (Cross-Site Scripting Framework)',
+        nameEs: 'Framework automatizado para auditar y explotar XSS',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Herramienta de pruebas de penetración automatizada para detectar, fuzear y explotar vulnerabilidades de secuencias de comandos en sitios cruzados (Cross-Site Scripting - XSS) en aplicaciones web.',
+        syntax: 'xsser -u "http://sitio.com/buscar?q=" --auto',
+        flags: [
+          { flag: '-u <url>', desc: 'URL que contiene el parámetro a probar.' },
+          { flag: '--auto', desc: 'Prueba automáticamente vectores XSS predefinidos con diferentes tipos de bypasses.' }
+        ],
+        scenario: 'Validación de filtros y comprobación de sanitización de entradas en aplicaciones web.'
+      },
+      {
+        letter: 'X',
+        cmd: 'xfreerdp',
+        nameEn: 'XFreeRDP (Remote Desktop Client)',
+        nameEs: 'Cliente de escritorio remoto para Windows (RDP)',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Cliente RDP de alto rendimiento para conectarse a servidores y escritorios Windows. Es compatible con autenticación Pass-the-Hash y permite redirigir carpetas locales e impresoras a la sesión remota.',
+        syntax: 'xfreerdp /v:192.168.1.100 /u:Administrator /p:"Pass123" /size:1280x720',
+        flags: [
+          { flag: '/v:<ip>', desc: 'Dirección IP del servidor RDP (puerto 3389 por defecto).' },
+          { flag: '/u: / /p:', desc: 'Credenciales de usuario y clave.' },
+          { flag: '/pth:<hash>', desc: 'Permite autenticación directa utilizando el hash NTLM sin contraseña.' }
+        ],
+        scenario: 'Acceso visual directo a máquinas Windows comprometidas en auditorías internas.'
+      },
+      {
+        letter: 'Y',
+        cmd: 'yara',
+        nameEn: 'YARA (Pattern Matching Swiss Knife)',
+        nameEs: 'Identificador de malware y patrones de ficheros',
+        category: 'pass',
+        env: 'Kali Linux',
+        desc: 'Herramienta dirigida principalmente a investigadores de malware. Permite clasificar y detectar archivos sospechosos creando descripciones basadas en patrones textuales o binarios (hexadecimales).',
+        syntax: 'yara reglas.yar /directorio/sospechoso',
+        flags: [
+          { flag: '-r', desc: 'Escanea de forma recursiva todos los subdirectorios.' },
+          { flag: '-m', desc: 'Muestra los metadatos asociados a las reglas que coincidan.' }
+        ],
+        scenario: 'Búsqueda e identificación de implantes y troyanos durante análisis de compromiso o forense.'
+      },
+      {
+        letter: 'Y',
+        cmd: 'yersinia',
+        nameEn: 'Yersinia (Layer 2 Attack Framework)',
+        nameEs: 'Framework de ataques a protocolos de capa 2',
+        category: 'recon',
+        env: 'Kali Linux',
+        desc: 'Herramienta de análisis de seguridad en redes que aprovecha debilidades en protocolos de conmutadores de capa 2: Spanning Tree Protocol (STP), Cisco Discovery Protocol (CDP), DTP, HSRP y ataques de saturación DHCP.',
+        syntax: 'sudo yersinia -I',
+        flags: [
+          { flag: '-I', desc: 'Inicia la interfaz interactiva ncurses en la terminal.' },
+          { flag: '-G', desc: 'Lanza la interfaz gráfica GTK.' }
+        ],
+        scenario: 'Evaluación de seguridad de switches en centros de datos y redes locales corporativas.'
+      },
+      {
+        letter: 'Z',
+        cmd: 'zaproxy',
+        nameEn: 'OWASP ZAP (Zed Attack Proxy)',
+        nameEs: 'Proxy y escáner web automatizado de OWASP',
+        category: 'web',
+        env: 'Ambos',
+        desc: 'Uno de los proyectos insignia de OWASP. Un proxy de intercepción y escáner de seguridad web completamente gratuito y de código abierto para encontrar vulnerabilidades comunes en APIs y páginas web.',
+        syntax: 'zaproxy &',
+        flags: [
+          { flag: '-daemon', desc: 'Inicia ZAP en segundo plano sin interfaz gráfica para integrarlo en pipelines CI/CD.' },
+          { flag: '-port <num>', desc: 'Define el puerto en el que escuchará el proxy.' }
+        ],
+        scenario: 'Auditorías de aplicaciones web, descubrimiento de cabeceras ausentes y análisis de vulnerabilidades.'
+      },
+      {
+        letter: 'Z',
+        cmd: 'zenmap',
+        nameEn: 'Zenmap (Official Nmap GUI)',
+        nameEs: 'Interfaz gráfica oficial y visor de topología Nmap',
+        category: 'recon',
+        env: 'Ambos',
+        desc: 'Interfaz visual multiplataforma para Nmap. Permite guardar perfiles de escaneo habituales, comparar diferencias entre dos escaneos en distintas fechas y dibujar mapas visuales de la topología de red.',
+        syntax: 'zenmap &',
+        flags: [
+          { flag: 'Perfil', desc: 'Plantillas rápidas preconfiguradas (Intense scan, Ping scan, Quick scan).' }
+        ],
+        scenario: 'Generación de gráficos de red y presentación visual de auditorías a clientes.'
+      }
+    ];
+
+    let currentFilter = 'all';
+    let currentLetter = null;
+    let searchQuery = '';
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+    const grid = document.getElementById('commandsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const alphabetContainer = document.getElementById('alphabetButtonsContainer');
+    const totalCommandsCount = document.getElementById('totalCommandsCount');
+    const noResultsState = document.getElementById('noResultsState');
+    const filterStatus = document.getElementById('filterStatus');
+    const resetAllFilters = document.getElementById('resetAllFilters');
+    const randomCmdBtn = document.getElementById('randomCmdBtn');
+
+    const commandModal = document.getElementById('commandModal');
+    const modalBox = document.getElementById('modalBox');
+    const modalCmdName = document.getElementById('modalCmdName');
+    const modalLetterTag = document.getElementById('modalLetterTag');
+    const modalEnvTag = document.getElementById('modalEnvTag');
+    const modalCmdRoleEs = document.getElementById('modalCmdRoleEs');
+    const modalExplanation = document.getElementById('modalExplanation');
+    const modalSyntax = document.getElementById('modalSyntax');
+    const modalFlagsList = document.getElementById('modalFlagsList');
+    const modalScenarioText = document.getElementById('modalScenarioText');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const closeModalBottomBtn = document.getElementById('closeModalBottomBtn');
+    const copySyntaxBtn = document.getElementById('copySyntaxBtn');
+    const toastNotification = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function renderAlphabetButtons() {
+      alphabetContainer.innerHTML = '';
+      letters.forEach(letter => {
+        const btn = document.createElement('button');
+        btn.textContent = letter;
+        btn.className = `letter-btn py-1 font-mono font-bold text-xs rounded transition flex items-center justify-center border ${
+          currentLetter === letter 
+            ? 'bg-cyber-cyan text-black border-cyber-cyan shadow-[0_0_10px_rgba(0,240,255,0.6)]' 
+            : 'bg-cyber-darker text-slate-300 border-cyber-border hover:border-cyber-cyan hover:text-cyber-cyan'
+        }`;
+        btn.addEventListener('click', () => {
+          if (currentLetter === letter) {
+            currentLetter = null;
+          } else {
+            currentLetter = letter;
+          }
+          updateAlphabetUI();
+          renderCommands();
+        });
+        alphabetContainer.appendChild(btn);
+      });
+    }
+
+    function updateAlphabetUI() {
+      const buttons = alphabetContainer.querySelectorAll('.letter-btn');
+      buttons.forEach(btn => {
+        if (btn.textContent === currentLetter) {
+          btn.className = 'letter-btn py-1 font-mono font-bold text-xs rounded transition flex items-center justify-center border bg-cyber-cyan text-black border-cyber-cyan shadow-[0_0_10px_rgba(0,240,255,0.6)]';
+        } else {
+          btn.className = 'letter-btn py-1 font-mono font-bold text-xs rounded transition flex items-center justify-center border bg-cyber-darker text-slate-300 border-cyber-border hover:border-cyber-cyan hover:text-cyber-cyan';
+        }
+      });
+    }
+
+    function renderCommands() {
+      const filtered = COMMANDS_DATABASE.filter(item => {
+        const matchCategory = currentFilter === 'all' || item.category === currentFilter;
+        const matchLetter = !currentLetter || item.letter === currentLetter;
+        const q = searchQuery.toLowerCase().trim();
+        const matchSearch = !q || 
+          item.cmd.toLowerCase().includes(q) || 
+          item.nameEn.toLowerCase().includes(q) || 
+          item.nameEs.toLowerCase().includes(q) ||
+          item.desc.toLowerCase().includes(q);
+
+        return matchCategory && matchLetter && matchSearch;
+      });
+
+      totalCommandsCount.textContent = filtered.length;
+      updateFilterStatusLabel(filtered.length);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        noResultsState.classList.remove('hidden');
+        return;
+      }
+
+      noResultsState.classList.add('hidden');
+      grid.innerHTML = '';
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'tech-card bg-cyber-panel/90 border border-cyber-border rounded-xl p-4 flex flex-col justify-between cursor-pointer relative overflow-hidden group';
+        
+        let envClass = 'text-cyber-cyan border-cyber-cyan/30 bg-cyber-cyan/10';
+        if (item.env === 'Kali NetHunter') {
+          envClass = 'text-cyber-emerald border-cyber-emerald/30 bg-cyber-emerald/10';
+        } else if (item.env === 'Ambos') {
+          envClass = 'text-cyber-purple border-cyber-purple/30 bg-cyber-purple/10';
+        }
+
+        card.innerHTML = `
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <span class="w-6 h-6 rounded bg-black/60 border border-cyber-border text-cyber-cyan font-mono font-black text-xs flex items-center justify-center">
+                ${item.letter}
+              </span>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border ${envClass} font-semibold">
+                ${item.env}
+              </span>
+            </div>
+
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs text-cyber-emerald font-mono font-bold">$</span>
+                <h3 class="font-mono text-base font-bold text-white group-hover:text-cyber-cyan transition-colors">
+                  ${item.cmd}
+                </h3>
+              </div>
+              <p class="text-xs text-slate-300 font-sans mt-1 font-medium leading-snug">
+                ${item.nameEs}
+              </p>
+              <p class="text-[11px] text-slate-500 font-mono mt-0.5">
+                [${item.nameEn}]
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-cyber-border/70 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-cyber-cyan flex items-center gap-1 group-hover:underline">
+              <i class="fa-solid fa-bolt-lightning text-xs"></i> Ver funcionamiento
+            </span>
+            <span class="w-6 h-6 rounded-full bg-cyber-darker text-slate-400 group-hover:text-black group-hover:bg-cyber-cyan flex items-center justify-center text-xs transition">
+              <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </span>
+          </div>
+        `;
+
+        card.addEventListener('click', () => openCommandModal(item));
+        grid.appendChild(card);
+      });
+    }
+
+    function updateFilterStatusLabel(count) {
+      let text = `Mostrando <strong class="text-white">${count}</strong> comandos`;
+      if (currentLetter) {
+        text += ` para la letra <span class="text-cyber-cyan font-bold font-mono text-sm">[${currentLetter}]</span>`;
+      }
+      if (currentFilter !== 'all') {
+        text += ` en categoría seleccionada`;
+      }
+      if (searchQuery) {
+        text += ` coincidentes con "${searchQuery}"`;
+      }
+      filterStatus.innerHTML = text;
+
+      if (currentLetter || currentFilter !== 'all' || searchQuery) {
+        resetAllFilters.classList.remove('hidden');
+      } else {
+        resetAllFilters.classList.add('hidden');
+      }
+    }
+
+    function openCommandModal(cmd) {
+      modalCmdName.textContent = cmd.cmd;
+      modalLetterTag.textContent = cmd.letter;
+      modalEnvTag.textContent = cmd.env;
+      modalCmdRoleEs.textContent = cmd.nameEs;
+      modalExplanation.textContent = cmd.desc;
+      modalSyntax.textContent = cmd.syntax;
+      modalScenarioText.textContent = cmd.scenario;
+
+      modalFlagsList.innerHTML = '';
+      if (cmd.flags && cmd.flags.length > 0) {
+        cmd.flags.forEach(f => {
+          const item = document.createElement('div');
+          item.className = 'text-xs font-sans flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-2.5 py-1 border-b border-cyber-border/40 last:border-none';
+          item.innerHTML = `
+            <code class="font-mono text-cyber-cyan font-semibold text-[11px] shrink-0 bg-black/60 px-1.5 py-0.5 rounded border border-cyber-border">
+              ${f.flag}
+            </code>
+            <span class="text-slate-300">${f.desc}</span>
+          `;
+          modalFlagsList.appendChild(item);
+        });
+      }
+
+      commandModal.classList.remove('hidden');
+      setTimeout(() => {
+        modalBox.classList.remove('scale-95', 'opacity-0');
+        modalBox.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeCommandModal() {
+      modalBox.classList.remove('scale-100', 'opacity-100');
+      modalBox.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        commandModal.classList.add('hidden');
+      }, 200);
+    }
+
+    function copyTextToClipboard(text, customMsg = 'Comando copiado al portapapeles') {
+      try {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showToast(customMsg);
+      } catch (err) {
+        console.error('Error al copiar:', err);
+      }
+    }
+
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      toastNotification.classList.remove('translate-y-20', 'opacity-0');
+      toastNotification.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toastNotification.classList.remove('translate-y-0', 'opacity-100');
+        toastNotification.classList.add('translate-y-20', 'opacity-0');
+      }, 2500);
+    }
+
+    function resetFilters() {
+      currentFilter = 'all';
+      currentLetter = null;
+      searchQuery = '';
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if (btn.getAttribute('data-cat') === 'all') {
+          btn.className = 'cat-pill px-3 py-1.5 rounded-lg border border-cyber-cyan bg-cyber-cyan text-black font-semibold shrink-0 transition';
+        } else {
+          btn.className = 'cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan shrink-0 transition';
+        }
+      });
+
+      updateAlphabetUI();
+      renderCommands();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderAlphabetButtons();
+      renderCommands();
+
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        if (searchQuery.length > 0) {
+          clearSearchBtn.classList.remove('hidden');
+        } else {
+          clearSearchBtn.classList.add('hidden');
+        }
+        renderCommands();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        renderCommands();
+      });
+
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.cat-pill').forEach(b => {
+            b.className = 'cat-pill px-3 py-1.5 rounded-lg border border-cyber-border bg-cyber-darker text-slate-300 hover:border-cyber-cyan hover:text-cyber-cyan shrink-0 transition';
+          });
+          btn.className = 'cat-pill px-3 py-1.5 rounded-lg border border-cyber-cyan bg-cyber-cyan text-black font-semibold shrink-0 transition';
+          currentFilter = btn.getAttribute('data-cat');
+          renderCommands();
+        });
+      });
+
+      closeModalBtn.addEventListener('click', closeCommandModal);
+      closeModalBottomBtn.addEventListener('click', closeCommandModal);
+      commandModal.addEventListener('click', (e) => {
+        if (e.target === commandModal) {
+          closeCommandModal();
+        }
+      });
+
+      copySyntaxBtn.addEventListener('click', () => {
+       copyTextToClipboard(modalSyntax.textContent, 'Sintaxis copiada al portapapeles');
+      });
+
+      resetAllFilters.addEventListener('click', resetFilters);
+
+      randomCmdBtn.addEventListener('click', () => {
+        const randomIndex = Math.floor(Math.random() * COMMANDS_DATABASE.length);
+        const randomCmd = COMMANDS_DATABASE[randomIndex];
+        openCommandModal(randomCmd);
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !commandModal.classList.contains('hidden')) {
+          closeCommandModal();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+```
+
